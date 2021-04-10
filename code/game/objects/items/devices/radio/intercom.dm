@@ -8,6 +8,22 @@
 	dog_fashion = null
 	unscrewed = FALSE
 
+/obj/item/radio/intercom/directional/north //QOL for mappers
+	dir = SOUTH
+	pixel_y = 24
+
+/obj/item/radio/intercom/directional/south
+	dir = NORTH
+	pixel_y = -24
+
+/obj/item/radio/intercom/directional/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/item/radio/intercom/directional/west
+	dir = EAST
+	pixel_x = -24
+
 /obj/item/radio/intercom/unscrewed
 	unscrewed = TRUE
 

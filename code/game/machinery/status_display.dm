@@ -160,6 +160,22 @@
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
 
+/obj/machinery/status_display/evac/directional/north //QOL for mappers
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/status_display/evac/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/status_display/evac/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/status_display/evac/directional/west
+	dir = EAST
+	pixel_x = -32
+
 /obj/machinery/status_display/evac/Initialize()
 	. = ..()
 	// register for radio system

@@ -205,6 +205,18 @@ GLOBAL_LIST_EMPTY(allCasters)
 	light_color = LIGHT_COLOR_GREEN
 	light_power = 1.5
 
+/obj/machinery/newscaster/directional/east //QOL for mappers
+	pixel_x = 32
+
+/obj/machinery/newscaster/directional/west
+	pixel_x = -32
+
+/obj/machinery/newscaster/directional/north
+	pixel_y = 32
+
+/obj/machinery/newscaster/directional/south
+	pixel_y = -32
+
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
 	securityCaster = 1

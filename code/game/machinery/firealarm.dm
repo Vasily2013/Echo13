@@ -35,6 +35,22 @@
 	var/last_alarm = 0
 	var/area/myarea = null
 
+/obj/machinery/firealarm/directional/north //QOL for mappers
+	dir = SOUTH
+	pixel_y = 24
+
+/obj/machinery/firealarm/directional/south
+	dir = NORTH
+	pixel_y = -24
+
+/obj/machinery/firealarm/directional/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/firealarm/directional/west
+	dir = EAST
+	pixel_x = -24
+
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
 	if(dir)
@@ -259,7 +275,7 @@
 
 /obj/machinery/firealarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if((buildstage == 0) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
-		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)	
+		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
 	return FALSE
 
 /obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
