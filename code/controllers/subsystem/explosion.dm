@@ -335,7 +335,7 @@ SUBSYSTEM_DEF(explosions)
 			var/list/items = list()
 			for(var/I in T)
 				var/atom/A = I
-				if (length(A.contents) && !(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
+				if (length(A.contents) && !A.prevent_content_explosion()) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
 					items += A.GetAllContents()
 			for(var/thing in items)
 				var/atom/movable/movable_thing = thing
@@ -361,7 +361,11 @@ SUBSYSTEM_DEF(explosions)
 			flameturf += T
 
 		//--- THROW ITEMS AROUND ---
-		var/throw_dir = get_dir(epicenter,T)
+		var/throw_dir
+		if(T == epicenter)
+			throw_dir = pick(list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+		else
+			throw_dir = get_dir(epicenter,T)
 		var/throw_range = max_range * 1.5
 		var/list/throwingturf = T.explosion_throw_details
 		if (throwingturf)
@@ -471,6 +475,7 @@ SUBSYSTEM_DEF(explosions)
 			var/turf/turf_thing = thing
 			turf_thing.explosion_level = max(turf_thing.explosion_level, EXPLODE_LIGHT)
 			turf_thing.ex_act(EXPLODE_LIGHT)
+			lowturf -= turf_thing
 		cost_lowturf = MC_AVERAGE(cost_lowturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
@@ -480,6 +485,7 @@ SUBSYSTEM_DEF(explosions)
 			var/turf/turf_thing = thing
 			turf_thing.explosion_level = max(turf_thing.explosion_level, EXPLODE_HEAVY)
 			turf_thing.ex_act(EXPLODE_HEAVY)
+			medturf -= turf_thing
 		cost_medturf = MC_AVERAGE(cost_medturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
@@ -489,6 +495,7 @@ SUBSYSTEM_DEF(explosions)
 			var/turf/turf_thing = thing
 			turf_thing.explosion_level = max(turf_thing.explosion_level, EXPLODE_DEVASTATE)
 			turf_thing.ex_act(EXPLODE_DEVASTATE)
+			highturf -= turf_thing
 		cost_highturf = MC_AVERAGE(cost_highturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
@@ -514,6 +521,7 @@ SUBSYSTEM_DEF(explosions)
 			if(QDELETED(movable_thing))
 				continue
 			movable_thing.ex_act(EXPLODE_DEVASTATE)
+			high_mov_atom -= movable_thing
 		cost_high_mov_atom = MC_AVERAGE(cost_high_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
@@ -524,6 +532,7 @@ SUBSYSTEM_DEF(explosions)
 			if(QDELETED(movable_thing))
 				continue
 			movable_thing.ex_act(EXPLODE_HEAVY)
+			med_mov_atom -= movable_thing
 		cost_med_mov_atom = MC_AVERAGE(cost_med_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
@@ -534,6 +543,7 @@ SUBSYSTEM_DEF(explosions)
 			if(QDELETED(movable_thing))
 				continue
 			movable_thing.ex_act(EXPLODE_LIGHT)
+			low_mov_atom -= movable_thing
 		cost_low_mov_atom = MC_AVERAGE(cost_low_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 
