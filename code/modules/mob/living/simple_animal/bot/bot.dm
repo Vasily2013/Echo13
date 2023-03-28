@@ -6,7 +6,7 @@
 	mob_biotypes = list(MOB_ROBOTIC)
 	light_range = 3
 	stop_automated_movement = 1
-	wander = 0
+	wander = FALSE
 	healable = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -80,12 +80,12 @@
 	var/model = "" //The type of bot it is.
 	var/bot_type = 0 //The type of bot it is, for radio control.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC //The type of data HUD the bot uses. Diagnostic by default.
-	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
+	//This holds text for what the bot is mode doing, reported on the remote bot control interface. This is in order of the defines for the mode defines in robots.dm, in order
 	var/list/mode_name = list("In Pursuit","Preparing to Arrest", "Arresting", \
 	"Beginning Patrol", "Patrolling", "Summoned by PDA", \
 	"Cleaning", "Repairing", "Proceeding to work site", "Healing", \
 	"Proceeding to AI waypoint", "Navigating to Delivery Location", "Navigating to Home", \
-	"Waiting for clear path", "Calculating navigation path", "Pinging beacon network", "Unable to reach destination")
+	"Waiting for clear path", "Calculating navigation path", "Pinging beacon network", "Unable to reach destination", "Chasing filth")
 	var/datum/atom_hud/data/bot_path/path_hud = new /datum/atom_hud/data/bot_path()
 	var/path_image_icon = 'icons/mob/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
@@ -183,9 +183,9 @@
 	GLOB.bots_list -= src
 	if(paicard)
 		ejectpai()
-	qdel(Radio)
-	qdel(access_card)
-	qdel(bot_core)
+	QDEL_NULL(Radio)
+	QDEL_NULL(access_card)
+	QDEL_NULL(bot_core)
 	return ..()
 
 /mob/living/simple_animal/bot/bee_friendly()
@@ -880,12 +880,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 /obj/machinery/bot_core
 	use_power = NO_POWER_USE
 	anchored = FALSE
-	var/mob/living/simple_animal/bot/owner = null
 
 /obj/machinery/bot_core/Initialize()
 	. = ..()
-	owner = loc
-	if(!istype(owner))
+	if(!isbot(loc))
 		return INITIALIZE_HINT_QDEL
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.

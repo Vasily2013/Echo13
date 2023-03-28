@@ -81,10 +81,6 @@
 	new	/obj/item/storage/firstaid/o2(src)
 	new	/obj/item/storage/firstaid/brute(src)
 	new /obj/item/storage/belt/medical(src)
-	new /obj/item/storage/belt/security/deputy(src)
-	new /obj/item/reagent_containers/spray/pepper(src)
-	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/restraints/handcuffs(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 
 /obj/structure/closet/secure_closet/hos
@@ -222,6 +218,7 @@
 	new /obj/item/clothing/neck/tie/red(src)
 	new	/obj/item/clothing/neck/tie/black(src)
 	new /obj/item/clothing/neck/tie/detective(src)
+	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 
 /obj/structure/closet/secure_closet/deputy
 	name = "deputy's locker"

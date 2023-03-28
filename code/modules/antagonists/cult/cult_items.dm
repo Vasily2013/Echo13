@@ -327,18 +327,19 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
 	name = "\improper Nar'Sien hardened helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
+	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It is reinforced by hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
 	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75, "stamina" = 50)
 	brightness_on = 0
 	actions_types = list()
+	high_pressure_multiplier = 0.5
 
 /obj/item/clothing/suit/space/hardsuit/cult
 	name = "\improper Nar'Sien hardened armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
+	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult."
 	w_class = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
 	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75, "stamina" = 50)
@@ -779,14 +780,13 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
-
 /obj/item/blood_beam/afterattack(atom/A, mob/living/user, flag, params)
 	. = ..()
 	if(firing || charging)
 		return
 	var/C = user.client
 	if(ishuman(user) && C)
-		angle = mouse_angle_from_client(C)
+		angle = Get_Angle(get_turf(src), get_turf(A))
 	else
 		qdel(src)
 		return
@@ -885,6 +885,7 @@
 	throw_range = 4
 	max_integrity = 50
 	w_class = WEIGHT_CLASS_BULKY
+	block_flags = BLOCKING_PROJECTILE
 	attack_verb = list("bumped", "prodded")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/illusions = 4

@@ -111,6 +111,11 @@
 	item_state = "sunhudscience"
 	flash_protect = 1
 
+/obj/item/clothing/glasses/science/sciencesun/degraded
+	name = "degraded science sunglasses"
+	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
+	flash_protect = 0
+
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
@@ -283,11 +288,13 @@
 	desc = "A bulky pair of unwieldy glasses that lets you see things best left unseen. Obscures vision, but also has enhanced shielding which blocks flashes."
 	icon_state = "bustin-g"
 	item_state = "bustin-g"
-	invis_view = SEE_INVISIBLE_OBSERVER
-	invis_override = null
 	flash_protect = 1
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_INVISVIEW
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/welding/ghostbuster/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/team_monitor, "ghost", 1)
 
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"

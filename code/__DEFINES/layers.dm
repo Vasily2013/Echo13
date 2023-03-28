@@ -25,8 +25,11 @@
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
+
+#define TURF_DECAL_LOWEST_LAYER 2.031
 #define TURF_PLATING_DECAL_LAYER 2.031
 #define TURF_DECAL_LAYER 2.039 //Makes turf decals appear in DM how they will look inworld.
+#define TURF_DECAL_STRIPE_LAYER 2.0391
 #define ABOVE_OPEN_TURF_LAYER 2.04
 #define CLOSED_TURF_LAYER 2.05
 #define BULLET_HOLE_LAYER 2.06
@@ -125,6 +128,10 @@
 #define CAMERA_STATIC_RENDER_TARGET "CAMERA_STATIC_PLANE"
 
 #define RUNECHAT_PLANE 20
+
+/// Plane for balloon text (text that fades up)
+#define BALLOON_CHAT_PLANE 20.5
+
 //HUD layer defines
 
 #define FULLSCREEN_PLANE 21
